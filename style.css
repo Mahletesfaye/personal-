@@ -1,0 +1,286 @@
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #111;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            font-weight: 500;
+            color: #333;
+        }
+
+
+        .cart-signup {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-signup i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .signup-btn {
+            padding: 8px 16px;
+            border: 1px solid #111;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .signup-btn:hover {
+            background-color: #111;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: url('images/Handcrafted\ pottery\ in\ warm\ sunlight\ \(1\).png') no-repeat center/cover;
+            display: flex;
+            align-items: center;
+            padding-left: 60px;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .hero button {
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hero button:hover {
+            background: #45a049;
+        }
+
+        /* Featured Products Section */
+        .featured {
+            padding: 50px;
+        }
+
+        .featured-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .featured-header h2 {
+            font-size: 28px;
+        }
+
+        .featured-header p {
+            color: gray;
+            font-size: 14px;
+        }
+
+        .featured-header a {
+            text-decoration: none;
+            color: green;
+            font-size: 14px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+       
+         
+            gap: 25px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+            transition: 0.3s;
+            width: 6cm;
+            height: 11cm;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+            font-size: 16px;
+        }
+
+        .card p {
+            color: gray;
+        }
+
+        .card button {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background: darkgreen;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #f6f8f5;
+        }
+
+        .feature {
+            max-width: 250px;
+        }
+
+        .feature h3 {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 50px;
+            background-color: #fff;
+            border-top: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-column p,
+        .footer-column a {
+            font-weight: 400;
+            color: #3b423c;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-left: 20px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-bottom hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 15px;
+        }
+
+        .footer-bottom p {
+            font-size: 13px;
+            color: #777;
+        }
