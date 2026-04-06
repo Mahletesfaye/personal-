@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HandCraft Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-
 </head>
 
 <body>
@@ -19,12 +20,19 @@
             <a href="#">Home</a>
             <a href="#">About</a>
         </nav>
-           <div class="nav-right">
-            <span class="cart">🛒</span>
-            <a href="#" class="signup">Sign Up</a>
-        </div>
-        
+        <div class="nav-right">
+            <div class="cart-container">
+                <i class="fa-solid fa-cart-shopping" id="cartIcon"></i>
+                    <span id="cartCount">0</span>
+            </div>
+            
+           
 
+
+          <!--<span class="cart">🛒</span> --> 
+          <!--  <a href="#" class="signup">Sign Up</a> -->
+            <a href="#" class="signup" id="openModal">Sign Up</a>
+        </div>
 
     </header>
 
@@ -36,6 +44,7 @@
             <button>Shop Collection &#8594;</button>
         </div>
     </section>
+
     <!-- Featured Products -->
     <section class="featured">
         <div class="featured-header">
@@ -43,7 +52,7 @@
                 <h2>Featured</h2>
                 <p>Our most loved pieces</p>
             </div>
-            <a href="#">View all →</a>
+            <a href="#" id="viewAllBtn">View all →</a>
         </div>
 
         <div class="product-grid">
@@ -51,7 +60,8 @@
                 <img src="images/candle.jpg" alt="Candle">
                 <h3>Sage & Driftwood Candle</h3>
                 <p>$34</p>
-                <button>🛒</button>
+                <i class="fa-solid fa-cart-shopping" onclick="addToCart('Sage Candle', 34, 'images/candle.jpg')"></i>
+
             </div>
 
 
@@ -59,27 +69,25 @@
                 <img src="images/handmade-mug.jpg" alt="handmade-mug">
                 <h3>Handmade Coffee Cup</h3>
                 <p>$28</p>
-                <button>🛒</button>
+                <i class="fa-solid fa-cart-shopping" onclick="addToCart('Handmade Coffee Cup', 28)"></i>
+               
             </div>
             <div class="card">
                 <img src="images/tote-bag.jpg" alt="tote-bag">
                 <h3>Large Canvas Beige Bag</h3>
                 <p>$42</p>
-                <button>🛒</button>
+                <i class="fa-solid fa-cart-shopping" onclick="addToCart('Canvas Bag', 42)"></i>
+                
             </div>
             <div class="card">
                 <img src="images/Soap.jpg" alt="soap">
                 <h3>Herbal Soap</h3>
                 <p>$16</p>
-                <button>🛒</button>
+                <i class="fa-solid fa-cart-shopping" onclick="addToCart('Herbal Soap', 16)"></i>
+            
             </div>
         </div>
     </section>
-    
-
-   
-
-  
 
     <!-- Features Section -->
     <section class="features">
@@ -118,6 +126,203 @@
         </div>
     </footer>
 
+
+
+
+
+
+    <!-- Signup Modal -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <span class="close-btn">&times;</span>
+
+    <h2>Join HandCraft</h2>
+    <p>Sign up to receive artisan stories and exclusive offers.</p>
+    
+    
+    
+    <div class="input-box">
+        <span class="details">Full Name</span>
+    <input type="text" placeholder="Jane Doe">
+    </div>
+    <div class="input-box">
+        <span class="details">Email Address</span>
+    <input type="email" placeholder="jane@example.com">
+    </div>
+    <div class="input box"> 
+        <span class="details">Password</span>
+    <input type="password" placeholder="Password (Min. 8 characters)">
+    </div>
+
+    <button class="submit-btn">Create Account</button>
+  </div>
+</div>
+
+
+<!-- CART PANEL -->
+<div id="cartPanel" class="cart-panel">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <span id="closeCart">&times;</span>
+  </div>
+
+  <div id="cartItems">
+    <p>Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <p>Subtotal: $<span id="subtotal">0</span></p>
+    <p class="checkout-note">Shipping & taxes calculated at checkout</p>
+    <button>Proceed to Pay</button>
+  </div>
+</div>
+
+
+
+<script>
+    // ================= MODAL =================
+const modal = document.getElementById("modal");
+const openBtn = document.getElementById("openModal");
+const closeBtn = document.querySelector(".close-btn");
+
+openBtn.onclick = () => modal.style.display = "flex";
+closeBtn.onclick = () => modal.style.display = "none";
+
+// ================= CART =================
+let cart = [];
+const cartIcon = document.getElementById("cartIcon");
+const cartPanel = document.getElementById("cartPanel");
+const closeCartBtn = document.getElementById("closeCart");
+
+cartIcon.onclick = () => cartPanel.classList.add("active");
+closeCartBtn.onclick = () => cartPanel.classList.remove("active");
+
+// Close modal or cart if clicking outside
+window.onclick = (e) => {
+    if (e.target === modal) modal.style.display = "none";
+    if (!cartPanel.contains(e.target) && e.target !== cartIcon) {
+        cartPanel.classList.remove("active");
+    }
+};
+
+// ===== CART FUNCTIONS =====
+function addToCart(name, price, imgSrc) {
+    let existingItem = cart.find(item => item.name === name);
+    if (existingItem) existingItem.qty++;
+    else cart.push({ name, price, qty: 1, img: imgSrc });
+
+    updateCart();
+    cartPanel.classList.add("active"); // open cart panel automatically
+}
+
+function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    const subtotalEl = document.getElementById("subtotal");
+    const cartCount = document.getElementById("cartCount");
+
+    cartItems.innerHTML = "";
+    let subtotal = 0;
+    let totalCount = 0;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        subtotalEl.innerText = 0;
+        cartCount.innerText = 0;
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        subtotal += item.price * item.qty;
+        totalCount += item.qty;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}" class="cart-img">
+            <div class="cart-info">
+                <strong>${item.name}</strong><br>
+                $${item.price}
+                <div class="qty-controls">
+                    <span class="qty-btn" onclick="changeQty(${index}, -1)">-</span>
+                    ${item.qty}
+                    <span class="qty-btn" onclick="changeQty(${index}, 1)">+</span>
+                    <span class="remove-btn" onclick="removeItem(${index})">×</span>
+                </div>
+            </div>
+        `;
+        cartItems.appendChild(div);
+    });
+
+    subtotalEl.innerText = subtotal;
+    cartCount.innerText = totalCount;
+}
+
+function changeQty(index, change) {
+    cart[index].qty += change;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    updateCart();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+// ===== VIEW ALL PRODUCTS =====
+const viewAllBtn = document.getElementById("viewAllBtn");
+const productGrid = document.querySelector(".product-grid");
+let productsLoaded = false;
+
+const extraProducts = [
+    { name: "Handwoven Scarf", price: 30, img: "images/" },
+    { name: "Ceramic Vase", price: 45, img: "images/vase.jpg" },
+    { name: "Leather Journal", price: 22, img: "images/journal.jpg" },
+    { name: "Wooden Spoon Set", price: 18, img: "images/spoon.jpg" }
+];
+
+viewAllBtn.onclick = (e) => {
+    e.preventDefault();
+    if (productsLoaded) return;
+
+    extraProducts.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+            <img src="${product.img}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>$${product.price}</p>
+            <i class="fa-solid fa-cart-shopping" onclick="addToCart('${product.name}', ${product.price}, '${product.img}')"></i>
+        `;
+        productGrid.appendChild(div);
+    });
+
+    productsLoaded = true;
+};
+   
+
+</script>
+
+
+
+
+<!-- JavaScript -->
+
+
+
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
